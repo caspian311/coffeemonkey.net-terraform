@@ -32,26 +32,3 @@ resource "aws_lambda_permission" "apigw_lambda" {
   source_arn = "arn:aws:execute-api:${var.myregion}:${var.accountId}:${var.api_id}/*/${aws_api_gateway_method.method.http_method}${aws_api_gateway_resource.endpoint-resource.path}"
 }
 
-resource "aws_api_gateway_deployment" "deployment" {
-  depends_on = ["aws_api_gateway_integration.integration"]
-  rest_api_id = "${var.api_id}"
-  stage_name = "dev"
-}
-
-resource "aws_api_gateway_stage" "stage" {
-  stage_name = "prod"
-  rest_api_id = "${var.api_id}"
-  deployment_id = "${aws_api_gateway_deployment.deployment.id}"
-}
-
-resource "aws_api_gateway_method_settings" "s" {
-  rest_api_id = "${var.api_id}"
-  stage_name  = "${aws_api_gateway_stage.stage.stage_name}"
-  method_path = "${aws_api_gateway_resource.endpoint-resource.path_part}/${aws_api_gateway_method.method.http_method}"
-
-  settings {
-    metrics_enabled = true
-  logging_level = "INFO"
-  }
-}
-
