@@ -79,4 +79,8 @@ resource "aws_iam_role" "lambda-role" {
 POLICY
 }
 
+output "api_url" {
+  value = "https://${aws_api_gateway_deployment.deployment.rest_api_id}.execute-api.${var.myregion}.amazonaws.com/${aws_api_gateway_stage.stage.stage_name}"
+}
+
 
