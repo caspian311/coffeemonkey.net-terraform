@@ -25,4 +25,6 @@ This is the terraform configuration to setup my AWS for my [CoffeeMonkey site](h
 
 This needs to be done from the coffeemonkey.net git repo.
 
+    $ aws s3 sync . s3://www.coffeemonkey.net
+
     $ npm deploy
