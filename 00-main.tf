@@ -13,3 +13,19 @@ variable "root_domain_name" {
   default = "coffeemonkey.net"
 }
 
+terraform {
+  backend "s3" {
+    bucket = "coffeemonkey-terraform-remote-state"
+    key = "infrastructure/"
+    region = "us-east-1"
+  }
+}
+
+data "terraform_remote_state" "infrastrucutre" {
+  backend = "s3"
+  config = {
+    bucket = "coffeemonkey-terraform-remote-state"
+    key    = "infrastructure/terraform.tfstate"
+    region = "us-east-1"
+  }
+}
